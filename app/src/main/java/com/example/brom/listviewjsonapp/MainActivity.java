@@ -4,6 +4,11 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toolbar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
+        new FetchData().execute();
 
     }
 
@@ -47,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 // Construct the URL for the Internet service
-                URL url = new URL("_ENTER_THE_URL_TO_THE_PHP_SERVICE_SERVING_JSON_HERE_");
+                URL url = new URL("http://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
 
                 // Create the request to the PHP-service, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -98,6 +105,32 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String o) {
             super.onPostExecute(o);
+
+            Log.d("bromrammstein","DataFetched:"+o);
+            try {
+// Ditt JSON-objekt som Java
+                JSONArray json1 = new JSONArray(o);
+                JSONObject json2 = new JSONObject(o);
+
+
+// När vi har ett JSONObjekt kan vi hämta ut dess beståndsdelar
+                Log.d("bromrammstein","first element:"+json1.get(0).toString());
+                Log.d("bromrammstein","first element:"+json1.get(1).toString());
+                Log.d("bromrammstein","first element:"+json1.get(2).toString());
+                Log.d("bromrammstein","first element:"+json1.get(3).toString());
+                Log.d("bromrammstein","first element:"+json1.get(4).toString());
+                Log.d("bromrammstein","Second element"+json2.getJSONObject(o));
+
+
+
+
+
+
+
+            } catch (JSONException e) {
+                Log.e("brom","E:"+e.getMessage());
+            }
+
             // This code executes after we have received our data. The String object o holds
             // the un-parsed JSON string or is null if we had an IOException during the fetch.
 
