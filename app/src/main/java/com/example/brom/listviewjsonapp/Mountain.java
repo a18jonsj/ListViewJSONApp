@@ -24,11 +24,12 @@ public class Mountain {
 
     public String info() {
         String str = name;
-        str += "Ligger i ";
+        str += "\nLigger i ";
         str += location;
-        str += "och har höjden ";
+        str += "\noch har höjden ";
 
         str += Integer.toString(height);
+        str += " meter";
         return str;
     }
 
