@@ -110,16 +110,27 @@ public class MainActivity extends AppCompatActivity {
             try {
 // Ditt JSON-objekt som Java
                 JSONArray json1 = new JSONArray(o);
-                JSONObject json2 = new JSONObject(o);
+                //JSONObject json2 = new JSONObject(o);
 
 
 // När vi har ett JSONObjekt kan vi hämta ut dess beståndsdelar
-                Log.d("bromrammstein","first element:"+json1.get(0).toString());
+                for (int i = 0; i < json1.length(); i++){
+                   JSONObject a = json1.getJSONObject(i);
+                   Mountain n = new Mountain(a.getString("name"));
+                   n.setHeight(a.getInt("size"));
+                   n.setLocation(a.getString("location"));
+
+                   Log.e("jonte",n.toString());
+
+
+
+                }
+                /*Log.d("bromrammstein","first element:"+json1.get(0).toString());
                 Log.d("bromrammstein","first element:"+json1.get(1).toString());
                 Log.d("bromrammstein","first element:"+json1.get(2).toString());
                 Log.d("bromrammstein","first element:"+json1.get(3).toString());
                 Log.d("bromrammstein","first element:"+json1.get(4).toString());
-                Log.d("bromrammstein","Second element"+json2.getJSONObject(o));
+                Log.d("bromrammstein","Second element"+json2.getJSONObject(o));*/
 
 
 
@@ -127,7 +138,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 Log.e("brom","E:"+e.getMessage());
             }
 

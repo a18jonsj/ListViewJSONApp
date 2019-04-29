@@ -39,4 +39,13 @@ public class Mountain {
     String hojd=String.valueOf(height);
     return hojd;
     }
+
+    public void setLocation (String newLocation) {
+        this.location = newLocation;
+
+    }
+    public String getLocation () {
+        String newLocation = location;
+        return newLocation;
+    }
 }
