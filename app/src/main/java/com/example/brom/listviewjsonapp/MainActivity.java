@@ -3,13 +3,16 @@ package com.example.brom.listviewjsonapp;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,8 +49,12 @@ public class MainActivity extends AppCompatActivity {
         new FetchData().execute();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
+        Log.d("bla","före toolbar");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        Log.d("bla","efter toolbar");
+
         listView=(ListView) findViewById(R.id.listview);
 
 
@@ -65,8 +72,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
 
+    @Override
 
+    public boolean onCreateOptionsMenu (Menu menu){
+        getMenuInflater().inflate(R.menu.menumain, menu);
+        return true;
+    }
+
+    @Override
+
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        int id =item.getItemId();
+
+        if ( (id==R.id.action_settings)){
+            return true;
+        }
+
+        if ( (id==R.id.action_refresh)){
+            new FetchData().execute();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private class FetchData extends AsyncTask<Void,Void,String>{
@@ -139,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
 // Ditt JSON-objekt som Java
                 JSONArray json1 = new JSONArray(o);
                 //JSONObject json2 = new JSONObject(o);
+
+                Mountainadapter.clear();
 
 
 // När vi har ett JSONObjekt kan vi hämta ut dess beståndsdelar
