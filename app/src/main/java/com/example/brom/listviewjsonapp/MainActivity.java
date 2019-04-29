@@ -4,6 +4,11 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import org.json.JSONArray;
@@ -16,6 +21,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 // Create a new class, Mountain, that can hold your JSON data
@@ -31,13 +38,34 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
+    ListView listView;
+    public ArrayAdapter <Mountain> Mountainadapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new FetchData().execute();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
-        new FetchData().execute();
+        listView=(ListView) findViewById(R.id.listview);
+
+
+
+        Mountainadapter=new ArrayAdapter (this, R.layout.list_item_textview,R.id.list_item_textview);
+
+
+        listView.setAdapter(Mountainadapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(),Mountainadapter.getItem(position).info(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
+
 
     }
 
@@ -121,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
                    n.setLocation(a.getString("location"));
 
                    Log.e("jonte",n.toString());
+
+                   Mountainadapter.add(n);
 
 
 
